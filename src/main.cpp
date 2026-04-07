@@ -11,13 +11,13 @@
 #define PIN_DRIVER2  5
 #define PIN_DRIVER4  6
 
-// Definición de pines de salida para LEDs (normalmente HIGH, se activan con LOW)
+// Definición de pines de salida para LEDs (se activan con HIGH)
 #define PIN_LED_CLEAN   7
 #define PIN_LED_CRUNCH  10
-#define PIN_LED_LEAD    20
+#define PIN_LED_LEAD    9
 #define PIN_LED_REVERB  21
 
-// Pin para señal de cambio de canal (se activa a nivel bajo por poco tiempo)
+// Pin para señal de cambio de canal (se activa por 100ms)
 #define PIN_CHANGE_SIGNAL 8
 
 // Estados posibles del canal
@@ -75,11 +75,11 @@ void setup() {
   pinMode(PIN_CHANGE_SIGNAL, OUTPUT);
   digitalWrite(PIN_CHANGE_SIGNAL, HIGH); // Inicialmente inactivo (HIGH)
 
-  // Estado inicial: LED clean encendido (LOW), otros apagados (HIGH)
-  digitalWrite(PIN_LED_CLEAN, LOW);    // CLEAN activo por defecto
-  digitalWrite(PIN_LED_CRUNCH, HIGH);
-  digitalWrite(PIN_LED_LEAD, HIGH);
-  digitalWrite(PIN_LED_REVERB, HIGH);
+  // Estado inicial: LED clean encendido (HIGH), otros apagados (LOW)
+  digitalWrite(PIN_LED_CLEAN, HIGH);    // CLEAN activo por defecto
+  digitalWrite(PIN_LED_CRUNCH, LOW);
+  digitalWrite(PIN_LED_LEAD, LOW);
+  digitalWrite(PIN_LED_REVERB, LOW);
 
   // Drivers en estado inicial según tabla de verdad para CLEAN
   digitalWrite(PIN_DRIVER1, HIGH);     // CLEAN: driver1 = 1
@@ -153,11 +153,11 @@ void updateDrivers() {
 
 void updateLEDs() {
   // Actualizar LEDs según el estado actual
-  // Los LEDs se activan con LOW (se encienden cuando el pin está en LOW)
-  digitalWrite(PIN_LED_CLEAN, (selectedChannel == CHANNEL_CLEAN) ? LOW : HIGH);
-  digitalWrite(PIN_LED_CRUNCH, (selectedChannel == CHANNEL_CRUNCH) ? LOW : HIGH);
-  digitalWrite(PIN_LED_LEAD, (selectedChannel == CHANNEL_LEAD) ? LOW : HIGH);
-  digitalWrite(PIN_LED_REVERB, reverbActive ? LOW : HIGH);
+  // Los LEDs se activan con HIGH (se encienden cuando el pin está en HIGH)
+  digitalWrite(PIN_LED_CLEAN, (selectedChannel == CHANNEL_CLEAN) ? HIGH : LOW);
+  digitalWrite(PIN_LED_CRUNCH, (selectedChannel == CHANNEL_CRUNCH) ? HIGH : LOW);
+  digitalWrite(PIN_LED_LEAD, (selectedChannel == CHANNEL_LEAD) ? HIGH : LOW);
+  digitalWrite(PIN_LED_REVERB, reverbActive ? HIGH : LOW);
 }
 
 void readInputs() {
